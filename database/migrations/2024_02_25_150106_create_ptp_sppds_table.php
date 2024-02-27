@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('ptp_sppds', function (Blueprint $table) {
+        Schema::create('ptp_sppd', function (Blueprint $table) {
             $table->increments("id");
             $table->integer('bawaslu_id');
             $table->integer('user_id');
@@ -43,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ptp_sppds');
+        Schema::dropIfExists('ptp_sppd');
     }
 };

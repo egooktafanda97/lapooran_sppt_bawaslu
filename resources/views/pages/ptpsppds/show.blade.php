@@ -10,13 +10,13 @@
                 <thead class="btn-primary text-white shadow-md">
                     <tr class="hover:bg-gray-300">
                         <th>No</th>
-                        <th>nomor_surat</th>
-                        <th>klasifikasi</th>
-                        <th>tanggal</th>
-                        <th>tanggal_dinas</th>
+                        <th>nama</th>
+                        <th>tanggl_keluar_st</th>
+                        <th>tanggal_berangkat</th>
+                        <th>tanggal_pulang</th>
+                        <th>no_spt</th>
+                        <th>jenis_surat_id</th>
                         <th>perihal</th>
-                        <th>tujuan_surat</th>
-                        <th>pengirim</th>
                         <th>status_surat</th>
                         <th>lampiran</th>
                         <th>#</th>
@@ -25,13 +25,13 @@
                 <tfoot class="btn-primary text-white  shadow-md">
                     <tr class="hover:bg-gray-300">
                         <th>No</th>
-                        <th>nomor_surat</th>
-                        <th>klasifikasi</th>
-                        <th>tanggal</th>
-                        <th>tanggal_dinas</th>
+                        <th>nama</th>
+                        <th>tanggl_keluar_st</th>
+                        <th>tanggal_berangkat</th>
+                        <th>tanggal_pulang</th>
+                        <th>no_spt</th>
+                        <th>jenis_surat_id</th>
                         <th>perihal</th>
-                        <th>tujuan_surat</th>
-                        <th>pengirim</th>
                         <th>status_surat</th>
                         <th>lampiran</th>
                         <th>#</th>
@@ -41,13 +41,13 @@
                     @foreach ($items as $item)
                         <tr class="hover:bg-gray-300">
                             <td>No</td>
-                            <td>{{ $item->nomor_surat ?? '-' }}</td>
-                            <td>{{ $item->klasifikasi ?? '-' }}</td>
-                            <td>{{ $item->tanggal ?? '-' }}</td>
-                            <td>{{ $item->tanggal_dinas ?? '-' }}</td>
+                            <td>{{ $item->nama ?? '-' }}</td>
+                            <td>{{ $item->tanggl_keluar_st ?? '-' }}</td>
+                            <td>{{ $item->tanggal_berangkat ?? '-' }}</td>
+                            <td>{{ $item->tanggal_pulang ?? '-' }}</td>
+                            <td>{{ $item->no_spt ?? '-' }}</td>
+                            <td>{{ $item->jenis_surat ?? '-' }}</td>
                             <td>{{ $item->perihal ?? '-' }}</td>
-                            <td>{{ $item->tujuan_surat ?? '-' }}</td>
-                            <td>{{ $item->pengirim ?? '-' }}</td>
                             <td>{{ $item->status_surat ?? '-' }}</td>
                             <td>{{ $item->lampiran ?? '-' }}</td>
                             <td>#</td>

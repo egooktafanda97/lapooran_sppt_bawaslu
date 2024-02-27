@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\returnSelf;
+use Illuminate\Support\Str;
+
 
 class BaseControllers extends Controller
 {
@@ -15,7 +17,7 @@ class BaseControllers extends Controller
 
     public function __construct(Request $request)
     {
-        $controllerName = ucfirst($request->segment(1) != "api" ? $request->segment(1) : $request->segment(2)) . 'Controller';
+        $controllerName = ucfirst(Str::kebab($request->segment(1)) != "api" ? $request->segment(1) : $request->segment(2)) . 'Controller';
         $controllerClass = "App\\Http\\Controllers\\$controllerName";
         if (class_exists($controllerClass)) {
             // $this->view = "pages." . $request->segment(1) . "." . ($request->segment(2) ?: "show");
@@ -23,14 +25,14 @@ class BaseControllers extends Controller
             $segment1 = $request->segment(1);
             $segment2 = $request->segment(2);
             if ($segment1 === 'api') {
-                $this->view = "api.$segment2";
-                $this->method = $request->segment(3) ?: 'index';
+                $this->view = "api." . (Str::kebab($segment2));
+                $this->method =  Str::camel($request->segment(3)) ?: 'index';
                 $this->guards_request = "api";
                 $request->merge(['view' => $this->view, "guards_request" => "api"]);
             } else if ($segment1 != 'api') {
                 $this->guards_request = "web";
                 $this->view = "pages.$segment1.$segment2";
-                $this->method = $request->segment(2) ?: 'index';
+                $this->method =  Str::camel($request->segment(2)) ?: 'index';
                 $request->merge(['view' => $this->view, "guards_request" => "web"]);
             }
 
