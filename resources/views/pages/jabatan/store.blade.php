@@ -5,17 +5,26 @@
                 <a href="{{ url('/dash') }}"></a>/</span>
             {{ $title ?? '' }}
         </h4>
-        <div class="w-full ">
-            <div class="row">
+        <form action="{{ url('store-jabatan') }}">
+            <div class="w-full ">
+                <div class="row">
 
-                <div class="col-6">
-                    <div class="form-group ">
-                        <label for="">Klasifikasi</label>
-                        <input class="form-controll" name="nomor_surat" readonly type="text">
+                    <div class="col-6">
+                        <div class="form-group ">
+                            <label for="">Nama Jabatan</label>
+                            <input class="form-controll" name="jabatan" name="{{ $jabatan->nama }}" readonly type="text">
+                        </div>
                     </div>
-                </div>
+                    <div class="col-6">
+                        <div class="form-group ">
+                            <label for="">Keterangan</label>
+                            <textarea class="form-controll" name="keterangan">{{ $jabatan->keterangan ?? '' }}</textarea>
+                        </div>
+                    </div>
 
+
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection

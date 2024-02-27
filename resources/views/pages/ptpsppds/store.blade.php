@@ -40,6 +40,17 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
+                            <label for="">Jenis Surat</label>
+                            <select id="jenis_surat_id" name="jenis_surat_id">
+                                <option value="">Pilih Jenis Surat</option>
+                                @foreach ($items as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
                             <label for="">Perihal</label>
                             <textarea cols="4" id="perihal" name="perihal" rows="4"></textarea>
                         </div>
