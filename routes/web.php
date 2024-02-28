@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([], function () {
+    Route::get("/login", [\App\Http\Controllers\Authentication::class, 'show']);
+    Route::post("/login", [\App\Http\Controllers\Authentication::class, 'show']);
+});
+
 Route::group(["prefix" => '/{any}'], function () {
     $request = app('request');
-    $base = new \App\Http\Controllers\BaseControllers($request);
+    $base = new \App\Services\Base\BaseControllers($request);
+    $request->merge($base->getMergeRequest());
     Route::any('/', $base->index($request))->where('any', '.*');
 });
 

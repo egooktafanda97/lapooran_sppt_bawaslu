@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => '/{any}'], function () {
     $request = app('request');
-    $base = new \App\Http\Controllers\BaseControllers($request);
+    $base = new \App\Services\Base\BaseControllers($request);
+    // $request->merge($base->getMergeRequest());
     Route::any('/', $base->index($request))->where('any', '.*');
 });
 // Route::get('/{any}', [\App\Http\Controllers\BaseControllers::class, 'index'])->where('any', '.*');

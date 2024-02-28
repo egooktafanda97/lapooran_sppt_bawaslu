@@ -10,9 +10,7 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {
-        $this->args = [
-            "main" => "ok gas"
-        ];
+
         return view($request->view);
     }
 }
