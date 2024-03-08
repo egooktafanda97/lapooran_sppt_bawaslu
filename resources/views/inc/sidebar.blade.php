@@ -58,40 +58,40 @@
 
         <!-- Misc -->
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('bawaslu/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="">{{ __('Data Bawaslu') }}</div>
             </a>
         </li>
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('pskb/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="Permohonan Surat Keluar Bawaslu">{{ __('PSKB') }}</div>
             </a>
         </li>
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('ptpsppds/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="Permohonan Surat Tugas dan Pencairan PPPD">{{ __('PSTP SPPD') }}</div>
             </a>
         </li>
 
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('anggota/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="">{{ __('Data Angota') }}</div>
             </a>
         </li>
 
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('jabatan/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="">{{ __('Data Jabatan') }}</div>
             </a>
         </li>
 
         <li class="menu-item">
-            <a class="menu-link" href="#" target="_blank">
+            <a class="menu-link" href="{{ url('laporan/show') }}">
                 <i class="menu-icon tf-icons ti ti-file-description"></i>
                 <div title="">{{ __('Laporan') }}</div>
             </a>

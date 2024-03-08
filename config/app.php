@@ -191,7 +191,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        \Lerouse\LaravelRepository\LaravelRepositoryServiceProvider::class,
         /*
          * Application Service Providers...
          */

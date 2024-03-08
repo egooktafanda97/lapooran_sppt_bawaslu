@@ -13,6 +13,7 @@
     <link href="{{ url(config('app.favicon')) }}" rel="icon" type="image/x-icon" />
     <meta content="{{ csrf_token() }}" name="csrf-token">
     <meta content="{{ auth()->user()->token ?? null }}" name="api-token">
+    <meta content="{{ url('/') }}" name="url">
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -84,10 +85,13 @@
     {{-- <script src="{{ asset("assets/vendor/libs/i18n/i18n.js") }}"></script> --}}
     <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 
     {{--    @yield('footer_asset') --}}
     @stack('footer_asset')
+    @stack('script')
     <script>
         $(document).ready(function() {
             var baseUrl = 'http://127.0.0.1:8000';

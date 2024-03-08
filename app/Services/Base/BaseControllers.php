@@ -15,7 +15,8 @@ class BaseControllers
     private $request;
     public function __construct(Request $request)
     {
-        $controllerName = ucfirst(Str::kebab($request->segment(1)) != "api" ? $request->segment(1) : $request->segment(2)) . 'Controller';
+        $InitcontrollerName = ucfirst(Str::kebab($request->segment(1)) != "api" ? $request->segment(1) : $request->segment(2)) . 'Controller';
+        $controllerName = str_replace('-', '', ucwords($InitcontrollerName, '-'));
         $controllerClass = "App\\Http\\Controllers\\$controllerName";
         $this->request = $request;
         $segment1 = $request->segment(1);

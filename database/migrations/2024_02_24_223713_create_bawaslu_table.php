@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('bawaslu', function (Blueprint $table) {
             $table->increments("id");
+            $table->integer("user_id")->nullable();
             $table->string("nama");
+            $table->string('provinsi_id', 2)->index();
+            $table->string('kabupaten_id', 4)->index();
+            $table->string('kecamatan_id', 7)->index();
             $table->timestamps();
         });
     }
