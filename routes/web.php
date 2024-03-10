@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function () {
-    Route::get("/login", [\App\Http\Controllers\Authentication::class, 'show']);
+    Route::get("/", [\App\Http\Controllers\Authentication::class, 'show']);
+    Route::get("/login", [\App\Http\Controllers\Authentication::class, 'show'])->name("login");
     Route::post("/login", [\App\Http\Controllers\Authentication::class, 'show']);
 });
 

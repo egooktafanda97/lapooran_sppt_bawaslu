@@ -7,12 +7,22 @@
                 Tambah Data
             </button>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="w-full ">
             <table class="display responsive nowrap" id="tables" style="width:100%">
                 <thead class="btn-primary text-white shadow-md">
                     <tr class="hover:bg-gray-300">
                         <th class="w-[30px]">No</th>
                         <th>Nama</th>
+                        <th>Singkatan</th>
                         <th>Provinsi</th>
                         <th>Kabupaten</th>
                         <th>Kecamatan</th>
@@ -23,6 +33,7 @@
                     <tr class="hover:bg-gray-300">
                         <th class="w-[30px]">No</th>
                         <th>Nama</th>
+                        <th>Singkatan</th>
                         <th>Provinsi</th>
                         <th>Kabupaten</th>
                         <th>Kecamatan</th>
@@ -37,6 +48,7 @@
                         <tr class="hover:bg-gray-300">
                             <td>{{ $no++ }}</td>
                             <td>{{ $item->nama ?? '' }}</td>
+                            <td>{{ $item->singkatan_penomoran_surat ?? '' }}</td>
                             <td>{{ $item->provinsi->nama_provinsi ?? '' }}</td>
                             <td>{{ $item->kabupaten->nama_kabupaten ?? '' }}</td>
                             <td>{{ $item->kecamatan->nama_kecamatan ?? '' }}</td>
@@ -62,6 +74,7 @@
     <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <form action="{{ url('bawaslu/store') }}" id="form-data" method="post">
                     @csrf
                     <input name="id" type="hidden">
@@ -80,7 +93,12 @@
                                             <input class="form-control" name="nama" type="text">
                                         </div>
                                     </div>
-
+                                    <div class="col-12">
+                                        <div class="form-group ">
+                                            <label for="">Singkatan Penomoran Surat</label>
+                                            <input class="form-control" name="singkatan_penomoran_surat" type="text">
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-group ">
                                             <label for="">Username</label>

@@ -24,6 +24,7 @@ class Bawaslu extends Model
         return [
             "user_id" => "nullable",
             "nama" => "required",
+            "singkatan_penomoran_surat" => "required",
             "provinsi_id" => "required",
             "kabupaten_id" => "required",
             "kecamatan_id" => "required",
@@ -48,6 +49,6 @@ class Bawaslu extends Model
     //user
     public function user()
     {
-        return $this->hasOne(User::class, "id", "id");
+        return $this->belongsTo(User::class);
     }
 }

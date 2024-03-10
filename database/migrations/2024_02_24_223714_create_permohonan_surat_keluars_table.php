@@ -17,8 +17,8 @@ return new class extends Migration
             $table->increments("id");
             $table->integer('bawaslu_id');
             $table->integer('user_id');
-            $table->string('nomor_surat')->unique()->comment("kode surat");
-            $table->string('klasifikasi');
+            $table->string('judul');
+            $table->string('klasifikasi')->unique()->comment("kode surat");
             $table->date('tanggal');
             $table->date('tanggal_dinas')->nullable();
             $table->string('perihal');

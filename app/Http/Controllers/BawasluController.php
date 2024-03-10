@@ -11,6 +11,7 @@ use App\Models\wilayah_provinsi;
 use App\Services\Model\BawasluService;
 use App\Services\User\AccountService;
 use Illuminate\Http\Request;
+use Spatie\RouteAttributes\Attributes\Middleware;
 use Spatie\RouteAttributes\Attributes\Prefix;
 
 use function Symfony\Component\String\b;
@@ -21,6 +22,7 @@ use function Symfony\Component\String\b;
 ])]
 #[StaticModelRules(Bawaslu::class)]
 #[Service(BawasluService::class)]
+#[Middleware("web")]
 class BawasluController extends Controller
 {
     use Crud;
@@ -30,6 +32,9 @@ class BawasluController extends Controller
         $this->Initialize();
         $this->setData();
     }
+
+    // before update
+
 
     public function setData()
     {
@@ -50,7 +55,7 @@ class BawasluController extends Controller
     public function thenStore($request, $model)
     {
 
-        $AccountService =  User::create([
+        $AccountService = User::create([
             "name" => $request->nama,
             "username" => $request->username,
             "password" => bcrypt($request->password),
@@ -64,11 +69,14 @@ class BawasluController extends Controller
     public function thenUpdate($request, $model, $id)
     {
         $AccountService = new AccountService();
-        $AccountService->update($id, [
+        $data = [
             "name" => $request->nama,
             "username" => $request->username,
-            "password" => bcrypt($request->password),
             "role" => "bawaslu"
-        ]);
+        ];
+        if ($request->password)
+            $data["password"] = bcrypt($request->password);
+
+        $AccountService->update($id, $data);
     }
 }

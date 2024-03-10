@@ -6,9 +6,9 @@
             <a href="?type=ptpsppds"  class="btn btn-white">PTPB-SPPDS</a>
         </div>
         @if(empty(request()->get("type")) || request()->get("type") == "pskt")
-            @include('pages.Laporan.pskt')
+            @include('pages.surat-masuk.pskt')
         @else
-            @include('pages.Laporan.ptpb-sppds')
+            @include('pages.surat-masuk.ptpb-sppds')
         @endif
     </div>
 @endsection

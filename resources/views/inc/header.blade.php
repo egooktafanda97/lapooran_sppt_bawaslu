@@ -27,57 +27,14 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);">
                     <div class="avatar avatar-online">
-                        <img alt class="h-auto rounded-circle" src="{{ asset('assets/img/avatars/1.png') }}" />
+                        <img alt class="h-auto rounded-circle" src="https://lippianfamilydentistry.net/wp-content/uploads/2015/11/user-default.png" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="pages-account-settings-account.html">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar avatar-online">
-                                        <img alt class="h-auto rounded-circle"
-                                            src="{{ asset('assets/img/avatars/1.png') }}" />
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <span class="fw-medium d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-profile-user.html">
-                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                            <span class="align-middle">{{ __('header.my_profile') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-account-settings-account.html">
-                            <i class="ti ti-settings me-2 ti-sm"></i>
-                            <span class="align-middle">{{ __('header.settings') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-faq.html">
-                            <i class="ti ti-help me-2 ti-sm"></i>
-                            <span class="align-middle">{{ __('header.support') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="<?= url('/') ?>">
+                        <a class="dropdown-item" href="<?= url('/login') ?>">
                             <i class="ti ti-logout me-2 ti-sm"></i>
-                            <span class="align-middle">{{ __('header.logout') }}</span>
+                            <span class="align-middle">Logout</span>
                         </a>
                     </li>
                 </ul>

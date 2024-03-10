@@ -43,4 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // // Metode accessor untuk mendapatkan instance Anggota terkait
+    public function anggota()
+    {
+        return $this->hasOne(Anggota::class);
+    }
+
+    // relation bawaslu
+    public function bawaslu()
+    {
+        return $this->hasOne(Bawaslu::class);
+    }
 }

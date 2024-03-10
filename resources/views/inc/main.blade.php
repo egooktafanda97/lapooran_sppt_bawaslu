@@ -46,6 +46,7 @@
     </script>
     {{--    @yield('header_asset') --}}
     @stack('header_asset')
+    @stack('styles')
 </head>
 
 <body>

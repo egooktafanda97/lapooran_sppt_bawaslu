@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments("id");
             $table->integer("user_id")->nullable();
             $table->string("nama");
+            $table->string("singkatan_penomoran_surat");
             $table->string('provinsi_id', 2)->index();
             $table->string('kabupaten_id', 4)->index();
             $table->string('kecamatan_id', 7)->index();

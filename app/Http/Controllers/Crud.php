@@ -15,17 +15,18 @@ use Spatie\RouteAttributes\Attributes\Post;
 trait Crud
 {
     protected $model;
-    protected  $store_redirect;
+    protected $store_redirect;
     protected $serviceClass;
     protected $dataView = [];
+
     public function Initialize()
     {
-        $props = (object) collect(ReflectionMeta::getAttribute($this, Propertis::class, 'props'))->toArray();
+        $props = (object)collect(ReflectionMeta::getAttribute($this, Propertis::class, 'props'))->toArray();
         $service = ReflectionMeta::getAttribute($this, Service::class, 'service');
 
 
         if (!empty($props->MainModel))
-            $this->model =  $props->MainModel;
+            $this->model = $props->MainModel;
         if (!empty($props->store_redirect))
             $this->store_redirect = $props->store_redirect;
 
@@ -38,6 +39,20 @@ trait Crud
             $instace_model = $StaticModelRules;
             return new FormRequests($instace_model);
         });
+    }
+
+    // before store
+    public function beforeStore($req, $request, callable $next)
+    {
+        $request = collect($request->validated());
+        return $next($req, $request);
+    }
+
+    // before update
+    public function beforeUpdate($req, $request, $id, callable $next)
+    {
+        $request = collect($request->validated());
+        return $next($req, $request);
     }
 
     public function thenStore($request, $model)
@@ -64,7 +79,7 @@ trait Crud
     public function data_view()
     {
         if (!empty($this->serviceClass)) {
-            $Items =  $this->serviceClass->all();
+            $Items = $this->serviceClass->all();
         } else {
             $Items = $this->model::all();
         }
@@ -88,53 +103,58 @@ trait Crud
     public function store(Request $req, FormRequests $request)
     {
         try {
-            $validatedData = collect($request->validated());
-            if (!empty($this->apped_save))
-                $validatedData->merge($this->apped_save);
-            if (!empty($this->serviceClass))
-                $model = $this->serviceClass->create($validatedData->toArray());
-            else
-                $model = $this->model::create($validatedData->toArray());
+            return $this->beforeStore($req, $request, function ($req, $request) {
 
-            if (!$model) {
-                throw new \Exception("Error saving data");
-            }
+                $validatedData = $request;
+                if (!empty($this->apped_save))
+                    $validatedData->merge($this->apped_save);
+                if (!empty($this->serviceClass))
+                    $model = $this->serviceClass->create($validatedData->toArray());
+                else
+                    $model = $this->model::create($validatedData->toArray());
+
+                if (!$model) {
+                    throw new \Exception("Error saving data");
+                }
+                if (!empty($this->store_redirect)) {
+                    $this->thenStore($req, $model);
+                    return redirect($this->store_redirect)->with('success', 'Data successfully saved');
+                }
+                return redirect()->back()->with('success', 'Data successfully saved');
+            });
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
-        if (!empty($this->store_redirect)) {
-            $this->thenStore($req, $model);
-            return redirect($this->store_redirect)->with('success', 'Data successfully saved');
-        }
-
-        return redirect()->back()->with('success', 'Data successfully saved');
     }
 
     #[Post("/update/{id}")]
     #[Post("/store/{id}")]
     public function update(Request $req, FormRequests $request, $id)
     {
-        try {
-            $validatedData = collect($request->validated());
-            if (!empty($this->apped_save))
-                $validatedData->merge($this->apped_save);
 
-            if (!empty($this->serviceClass))
-                $model = $this->serviceClass->update($validatedData->toArray(), $id);
-            else
-                $model = $this->model::where("id", $id)->update($validatedData->toArray());
-            if (!$model) {
-                throw new \Exception("Error update data");
-            }
+        try {
+            return $this->beforeUpdate($req, $request, $id, function ($req, $request) use ($id) {
+                if (!empty($this->apped_save))
+                    $request->merge($this->apped_save);
+
+                if (!empty($this->serviceClass))
+                    $model = $this->serviceClass->update($request->toArray(), $id);
+                else
+                    $model = $this->model::where("id", $id)->update($request->toArray());
+                if (!$model) {
+                    throw new \Exception("Error update data");
+                }
+                if (!empty($this->store_redirect)) {
+                    $this->thenUpdate($req, $model, $id);
+                    return redirect($this->store_redirect)->with('success', 'Data successfully updated');
+                }
+
+                return redirect()->back()->with('success', 'Data successfully updated');
+            });
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
-        if (!empty($this->store_redirect)) {
-            $this->thenUpdate($req, $model, $id);
-            return redirect($this->store_redirect)->with('success', 'Data successfully updated');
-        }
-
-        return redirect()->back()->with('success', 'Data successfully updated');
     }
 
     #[Get("/destory/{id}")]

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('bawaslu_id');
             $table->integer('user_id');
             $table->string("nama");
-            $table->date("tanggl_keluar_st");
+            $table->date("tanggal_keluar_st");
             $table->date("tanggal_berangkat");
             $table->date("tanggal_pulang");
             $table->string("no_spt");
