@@ -192,7 +192,7 @@
 <body>
 
     <div class="container">
-        <form action="" method="post">
+        <form action="/login" method="post">
             @csrf
             <div class="pic2"></div>
             <img alt=""

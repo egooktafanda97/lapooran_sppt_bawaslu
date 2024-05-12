@@ -29,7 +29,7 @@ class AnggotaController extends Controller
 
         $request->merge([
             'status_anggota' => 'aktif',
-            'bawaslu_id' => auth()->user()->bawaslu->id,
+            'bawaslu_id' => auth()->user()->bawaslu->id ?? null,
         ]);
         $this->Initialize();
     }

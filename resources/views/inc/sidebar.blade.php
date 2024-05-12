@@ -86,6 +86,12 @@
                     <div title="Permohonan Surat Tugas dan Pencairan PPPD">{{ __('PSTP SPPD') }}</div>
                 </a>
             </li>
+            <li class="menu-item">
+                <a class="menu-link" href="{{ url('keuangan/show') }}">
+                    <i class="menu-icon tf-icons ti ti-file-description"></i>
+                    <div>{{ __('KEUANGAN') }}</div>
+                </a>
+            </li>
         @endif
 
         @if (auth()->user()->role == 'bawaslu')
@@ -114,6 +120,13 @@
                 <a class="menu-link" href="{{ url('jenis-surat/show') }}">
                     <i class="menu-icon tf-icons ti ti-file-description"></i>
                     <div title="">{{ __('Data Jenis Surat') }}</div>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a class="menu-link" href="{{ url('keuangan/show-all') }}">
+                    <i class="menu-icon tf-icons ti ti-file-description"></i>
+                    <div>{{ __('KEUANGAN') }}</div>
                 </a>
             </li>
 

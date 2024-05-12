@@ -9,11 +9,13 @@ class Authentication extends Controller
 {
     public function show(Request $request, AuthAuthentication $auth)
     {
+
         if ($request->isMethod('post')) {
             $auths = $auth->auth($request);
             if ($auth)
                 return redirect("/home/show");
         }
+
         return view("authentication.login");
     }
 }

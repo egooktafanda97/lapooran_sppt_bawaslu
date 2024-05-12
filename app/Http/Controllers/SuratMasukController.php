@@ -48,15 +48,16 @@ class SuratMasukController extends Controller
             "Items" => PermohonanSuratKeluar::when(request()->get("tanggal"), function ($query) {
 
                 $query->whereDate("tanggal", request()->get("tanggal"));
-
             })
                 ->when(request()->get("search"), function ($query) {
 
                     $query->where("status_surat", "like", "%" . request()->get("search") . "%");
-
+                })
+                ->when(!empty(auth()->user()->bawaslu->id), function ($query) {
+                    $query->where("bawaslu_id", auth()->user()->bawaslu->id);
                 })
                 ->where([
-                    'bawaslu_id' => auth()->user()->bawaslu->id,
+
                     "status_surat" => "pending"
                 ])
                 ->orderBy('id', 'desc')
@@ -83,8 +84,10 @@ class SuratMasukController extends Controller
                 ->when(request()->get("search"), function ($query) {
                     $query->where("status_surat", "like", "%" . request()->get("search") . "%");
                 })
+                ->when(!empty(auth()->user()->bawaslu->id), function ($query) {
+                    $query->where("bawaslu_id", auth()->user()->bawaslu->id);
+                })
                 ->where([
-                    'bawaslu_id' => auth()->user()->bawaslu->id,
                     "status_surat" => "pending"
                 ])
                 ->orderBy('id', 'desc')

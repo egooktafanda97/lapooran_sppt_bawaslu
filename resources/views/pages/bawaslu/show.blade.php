@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="flex justify-end mb-2">
-            <button class="btn btn-primary text-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" id="add-data"
+            <button class="btn btn-primary text-white" data-bs-target="#exampleModal" data-bs-toggle="modal" id="add-data"
                 type="button">
                 Tambah Data
             </button>
@@ -19,7 +19,7 @@
         <div class="w-full ">
             <table class="display responsive nowrap" id="tables" style="width:100%">
                 <thead class="btn-primary text-white shadow-md">
-                    <tr class="hover:bg-gray-300">
+                    <tr class="">
                         <th class="w-[30px]">No</th>
                         <th>Nama</th>
                         <th>Singkatan</th>
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tfoot class="btn-primary text-white  shadow-md">
-                    <tr class="hover:bg-gray-300">
+                    <tr>
                         <th class="w-[30px]">No</th>
                         <th>Nama</th>
                         <th>Singkatan</th>
