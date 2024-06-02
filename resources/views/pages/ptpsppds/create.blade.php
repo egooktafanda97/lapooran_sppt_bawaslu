@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-6 mb-3">
                             <div class="form-group">
-                                <label for="nama">Nama</label>
+                                <label for="nama">Nama Pengaju</label>
                                 <input class="form-control" id="nama" name="nama" type="text"
                                     value="{{ _val($ptpsppds->nama ?? '') }}">
                                 @error('nama')
@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-6 mb-3">
                             <div class="form-group">
-                                <label for="tanggal_pulang">Tanggal Pulang</label>
+                                <label for="tanggal_pulang">Tanggal Selesai</label>
                                 <input class="form-control" id="tanggal_pulang" name="tanggal_pulang" type="date"
                                     value="{{ _val(\Carbon\Carbon::parse($ptpsppds->tanggal_pulang ?? now())->format('Y-m-d') ?? '') }}">
                                 @error('tanggal_pulang')
@@ -61,10 +61,20 @@
                         </div>
                         <div class="col-6 mb-3">
                             <div class="form-group">
-                                <label for="no_spt">Nomor SPT</label>
+                                <label for="no_spt">NO SPT</label>
                                 <input class="form-control" id="no_spt" name="no_spt" type="text"
                                     value="{{ _val($ptpsppds->no_spt ?? '') }}">
                                 @error('no_spt')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="form-group">
+                                <label for="no_spt">Biaya</label>
+                                <input class="form-control" id="biaya" name="biaya" type="number"
+                                    value="{{ _val($ptpsppds->biaya ?? '') }}">
+                                @error('biaya')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

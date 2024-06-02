@@ -33,10 +33,10 @@ class PsktController extends Controller
     public function __construct(Request $request)
     {
         $request->merge([
-            'user_id' => auth()->user()->id,
-            'bawaslu_id' => auth()->user()->anggota->bawaslu->id,
+            'user_id' => auth()->user()->id ?? null,
+            'bawaslu_id' => optional(auth()->user())->anggota->bawaslu->id ?? null,
             'status_surat' => 'pending',
-            'pengirim' => auth()->user()->anggota->id,
+            'pengirim' => optional(auth()->user())->anggota->id ?? null,
         ]);
         $this->Initialize();
     }
@@ -63,12 +63,10 @@ class PsktController extends Controller
             "Items" => PermohonanSuratKeluar::when(request()->get("tanggal"), function ($query) {
 
                 $query->whereDate("tanggal", request()->get("tanggal"));
-
             })
                 ->when(request()->get("search"), function ($query) {
 
                     $query->where("status_surat", "like", "%" . request()->get("search") . "%");
-
                 })
                 ->where("bawaslu_id", $last)
                 ->where([
@@ -76,7 +74,7 @@ class PsktController extends Controller
                     'bawaslu_id' => auth()->user()->anggota->bawaslu->id
                 ])
                 ->orderBy('id', 'desc')
-        ->get(),
+                ->get(),
             "no_surat" => $this->serviceClass->builder()->getModel()::generateNomorSurat($last, date('Y-m-d')),
             ...(!empty(request()->id) ? collect($this->serviceClass->find(request()->id))->toArray() : [])
         ];
@@ -93,16 +91,13 @@ class PsktController extends Controller
 
     public function excel()
     {
-        $data = PermohonanSuratKeluar::
-        when(request()->get("tanggal"), function ($query) {
+        $data = PermohonanSuratKeluar::when(request()->get("tanggal"), function ($query) {
 
             $query->whereDate("tanggal", request()->get("tanggal"));
-
         })
             ->when(request()->get("search"), function ($query) {
 
                 $query->where("status_surat", "like", "%" . request()->get("search") . "%");
-
             })
             ->orderBy('id', 'desc')
             ->get()
@@ -125,7 +120,5 @@ class PsktController extends Controller
             'tujuan surat',
             'pengirim',
         ]), 'exports.xlsx');
-
     }
-
 }

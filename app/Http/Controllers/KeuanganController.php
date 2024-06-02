@@ -36,10 +36,16 @@ class KeuanganController extends Controller
     }
 
     #[Get("show-all")]
-    public function showAll()
+    public function showAll(Request $request)
     {
         return view('pages.keuangan.show-report', [
-            "keuangan" => Keuangan::with("items")->get()
+            "keuangan" => Keuangan::with("items")
+                ->where("bawaslu_id", optional(Bawaslu::whereUserId(auth()->user()->id)->first())->id)
+                ->when($request->get("unit"), function ($q) use ($request) {
+                    $q->where("user_id", $request->get("unit"));
+                })
+                ->get(),
+            "unit_kerja" => Anggota::whereBawasluId(Bawaslu::whereUserId(auth()->user()->id)->first()->id)->get()
         ]);
     }
 
@@ -71,44 +77,83 @@ class KeuanganController extends Controller
         return view('pages.keuangan.create', $data);
     }
 
-
-
     #[Post("store")]
     public function store(Request $request)
     {
-        if ($request->id != null)
-            return $this->update($request);
-        try {
-            $upload = Utility::Images($request, "lampiran", "lampiran_keuangan");
-            $keu = Keuangan::create([
-                "user_id" => auth()->user()->id,
-                "bawaslu_id" => Bawaslu::where("user_id", auth()->user()->id)->first()->id ?? Anggota::where("user_id", auth()->user()->id)->first()->bawaslu_id,
-                "no_surat" => $request->no_surat,
-                "no_dipa" => $request->no_dipa,
-                "tanggal" => $request->tanggal,
-                "klarifikasi_belnja" => $request->klarifikasi_belnja,
-                "pengeluaran" => $request->pengeluaran,
-                "sts" => $request->sts,
-                "lampiran" => $upload->status ? $upload->name : null,
+        // if ($request->id != null)
+        //     return $this->update($request);
+        // try {
+        $upload = Utility::Images($request, "lampiran", "lampiran_keuangan");
+        $keu = Keuangan::create([
+            "user_id" => auth()->user()->id,
+            "bawaslu_id" => Bawaslu::where("user_id", auth()->user()->id)->first()->id ?? Anggota::where("user_id", auth()->user()->id)->first()->bawaslu_id,
+            "no_surat" => $request->no_surat,
+            "no_dipa" => $request->no_dipa,
+            "tanggal_dikeluarkan" => date("Y-m-d"),
+            'tanggal_start' => $request->tanggal_start,
+            'tanggal_end' => $request->tanggal_end,
+            "klarifikasi_belnja" => $request->klarifikasi_belnja,
+            "pengeluaran" => $request->pengeluaran,
+            "sts" => $request->sts,
+            "lampiran" => $upload->status ? $upload->name : null,
+        ]);
+        $selectRangeItems = ItemKeuangan::where("user_id", auth()->user()->id)->whereBetween("tanggal_terima", [$request->tanggal_start, $request->tanggal_end])
+            ->update([
+                "keuangan_id" => $keu->id
             ]);
-            $items  = json_decode($request->items ?? [], true);
-            foreach ($items as $key => $value) {
-                $keu->items()->create([
-                    "keuangan_id" => $keu->id,
-                    "max" => $value['max'],
-                    "nama_penerima" => $value['nama_penerima'],
-                    "uraian" => $value['uraian'],
-                    "tanggal" => $value['tanggal'],
-                    "nomor" => $value['nomor'],
-                    "jumlah" => $value['jumlah'],
-                    "ppn" => $value['ppn'],
-                    "pph" => $value['pph'],
-                ]);
-            }
-            return redirect("keuangan/show");
-        } catch (\Throwable $th) {
-            return redirect("keuangan/create");
-        }
+
+        // $items  = json_decode($request->items ?? [], true);
+        // foreach ($items as $key => $value) {
+        //     $keu->items()->create([
+        //         "keuangan_id" => $keu->id,
+        //         "max" => $value['max'],
+        //         "nama_penerima" => $value['nama_penerima'],
+        //         "uraian" => $value['uraian'],
+        //         "tanggal" => $value['tanggal'],
+        //         "nomor" => $value['nomor'],
+        //         "jumlah" => $value['jumlah'],
+        //         "ppn" => $value['ppn'],
+        //         "pph" => $value['pph'],
+        //     ]);
+        // }
+        return redirect("keuangan/show");
+        // } catch (\Throwable $th) {
+        //     return redirect("keuangan/create");
+        // }
+    }
+
+    #[Get("show-unit")]
+    public function unitShow(Request $request)
+    {
+        return view('pages.data_keuangan.create', [
+            "keuangan" => ItemKeuangan::where([
+                "user_id" => auth()->user()->id
+            ])->get()
+        ]);
+    }
+
+    #[Post("store-unit")]
+    public function unitStore(Request $request)
+    {
+        // try {
+        ItemKeuangan::create([
+            "user_id" => auth()->user()->id,
+            "bawaslu_id" => Bawaslu::where("user_id", auth()->user()->id)->first()->id ?? Anggota::where("user_id", auth()->user()->id)->first()->bawaslu_id,
+            "no_surat_pencairan" => $request->no_surat_pencairan,
+            "dikeluarkan_oleh" => $request->dikeluarkan_oleh,
+            "nama_penerima" => $request->nama_penerima,
+            "uraian" => $request->uraian,
+            "tanggal_surat" => $request->tanggal_surat,
+            "tanggal_terima" => $request->tanggal_terima,
+            "nomor" => $request->nomor,
+            "jumlah" => $request->jumlah,
+            "ppn" => $request->ppn,
+            "pph" => $request->pph,
+        ]);
+        return redirect("keuangan/show-unit");
+        // } catch (\Throwable $th) {
+        //     return redirect("keuangan/show-unit");
+        // }
     }
 
     #[Get("create/{id}")]
@@ -137,21 +182,21 @@ class KeuanganController extends Controller
                 "sts" => $request->sts,
                 "lampiran" => $upload->status ? $upload->name : null,
             ]);
-            ItemKeuangan::where("keuangan_id", $request->id)->delete();
-            $items  = json_decode($request->items ?? [], true);
-            foreach ($items as $key => $value) {
-                $keu->items()->create([
-                    "keuangan_id" => $keu->id,
-                    "max" => $value['max'],
-                    "nama_penerima" => $value['nama_penerima'],
-                    "uraian" => $value['uraian'],
-                    "tanggal" => $value['tanggal'],
-                    "nomor" => $value['nomor'],
-                    "jumlah" => $value['jumlah'],
-                    "ppn" => $value['ppn'],
-                    "pph" => $value['pph'],
-                ]);
-            }
+            // ItemKeuangan::where("keuangan_id", $request->id)->delete();
+            // $items  = json_decode($request->items ?? [], true);
+            // foreach ($items as $key => $value) {
+            //     $keu->items()->create([
+            //         "keuangan_id" => $keu->id,
+            //         "max" => $value['max'],
+            //         "nama_penerima" => $value['nama_penerima'],
+            //         "uraian" => $value['uraian'],
+            //         "tanggal" => $value['tanggal'],
+            //         "nomor" => $value['nomor'],
+            //         "jumlah" => $value['jumlah'],
+            //         "ppn" => $value['ppn'],
+            //         "pph" => $value['pph'],
+            //     ]);
+            // }
             return redirect("keuangan/show");
         } catch (\Throwable $th) {
             return redirect("keuangan/create");
@@ -164,5 +209,10 @@ class KeuanganController extends Controller
         Keuangan::find($id)->delete();
         ItemKeuangan::where("keuangan_id", $id)->delete();
         return redirect("keuangan/show");
+    }
+
+    public function showItems()
+    {
+        return ItemKeuangan::whereUserId(auth()->user()->id)->get();
     }
 }

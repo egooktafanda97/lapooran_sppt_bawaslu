@@ -83,13 +83,19 @@
             <li class="menu-item">
                 <a class="menu-link" href="{{ url('ptpsppds/show') }}">
                     <i class="menu-icon tf-icons ti ti-file-description"></i>
-                    <div title="Permohonan Surat Tugas dan Pencairan PPPD">{{ __('PSTP SPPD') }}</div>
+                    <div title="Permohonan Surat Tugas dan Pencairan PPPD">{{ __('Permohonan Pencairan SPPD') }}</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" href="{{ url('keuangan/show-unit') }}">
+                    <i class="menu-icon tf-icons ti ti-file-description"></i>
+                    <div>{{ __('KEUANGAN') }}</div>
                 </a>
             </li>
             <li class="menu-item">
                 <a class="menu-link" href="{{ url('keuangan/show') }}">
                     <i class="menu-icon tf-icons ti ti-file-description"></i>
-                    <div>{{ __('KEUANGAN') }}</div>
+                    <div>{{ __('Buat Laporan Keuangan') }}</div>
                 </a>
             </li>
         @endif
@@ -126,7 +132,7 @@
             <li class="menu-item">
                 <a class="menu-link" href="{{ url('keuangan/show-all') }}">
                     <i class="menu-icon tf-icons ti ti-file-description"></i>
-                    <div>{{ __('KEUANGAN') }}</div>
+                    <div>{{ __('Laporan Keuangan') }}</div>
                 </a>
             </li>
 

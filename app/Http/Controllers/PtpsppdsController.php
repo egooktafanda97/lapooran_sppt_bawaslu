@@ -31,8 +31,8 @@ class PtpsppdsController extends Controller
     public function __construct(Request $request)
     {
         $request->merge([
-            'user_id' => auth()->user()->id,
-            'bawaslu_id' => auth()->user()->anggota->bawaslu->id,
+            'user_id' => auth()->user()->id ?? null,
+            'bawaslu_id' => auth()->user()->anggota->bawaslu->id ?? null,
             'status_surat' => 'pending',
         ]);
         $this->Initialize();
@@ -78,7 +78,7 @@ class PtpsppdsController extends Controller
                     $query->whereDate("tanggal_keluar_st", request()->get("tanggal"));
                 })
                 ->when(request()->get("search"), function ($query) {
-                    $query->where("status_surat","like", "%".request()->get("search")."%");
+                    $query->where("status_surat", "like", "%" . request()->get("search") . "%");
                 })
                 ->where([
                     'user_id' => auth()->user()->id,
@@ -110,27 +110,27 @@ class PtpsppdsController extends Controller
             })
             ->when(request()->get("search"), function ($query) {
 
-                $query->where("status_surat","like", "%".request()->get("search")."%");
-
+                $query->where("status_surat", "like", "%" . request()->get("search") . "%");
             })
             ->orderBy('id', 'desc')
             ->get()
             ->map(function ($q) {
                 unset($q->jenis_surat_id);
-                return [
-                    "bawaslu" => $q->bawaslu->nama,
-                    "anggota" => Anggota::whereuserId($q->user_id)->first()->nama,
-                    "nama" => $q->nama,
-                    "tanggal_keluar_st" => Carbon::parse($q->tanggal_keluar_st)->format("Y-m-d"),
-                    "tanggal_berangkat" => Carbon::parse($q->tanggal_berangkat)->format("Y-m-d"),
-                    "tanggal_pulang" => Carbon::parse($q->tanggal_pulang)->format("Y-m-d"),
-                    "no_spt" => $q->no_spt,
-                    "jenis_surat" => $q->jenis_surat->jenis_surat,
-                    "perihal" => $q->perihal,
-                ];
+                if ($q->bawaslu) {
+                    return [
+                        "bawaslu" => $q->bawaslu->nama  ?? "",
+                        "anggota" => Anggota::whereuserId($q->user_id)->first()->nama,
+                        "nama" => $q->nama,
+                        "tanggal_keluar_st" => Carbon::parse($q->tanggal_keluar_st)->format("Y-m-d"),
+                        "tanggal_berangkat" => Carbon::parse($q->tanggal_berangkat)->format("Y-m-d"),
+                        "tanggal_pulang" => Carbon::parse($q->tanggal_pulang)->format("Y-m-d"),
+                        "no_spt" => $q->no_spt,
+                        "jenis_surat" => $q->jenis_surat->jenis_surat,
+                        "perihal" => $q->perihal,
+                        "biaya" => number_format($q->biaya),
+                    ];
+                }
             });
-
-
         return Excel::download(new ExportExcels($data, [
             'Bawaslu',
             'Anggota Pemohon',
@@ -139,7 +139,9 @@ class PtpsppdsController extends Controller
             'Tanggal Berangkat',
             'Tanggal Pulang',
             'No. SPT',
+            'Jenis Surat',
             'Perihal',
+            'Biaya'
         ]), 'exports.xlsx');
     }
 }

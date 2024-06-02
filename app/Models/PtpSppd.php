@@ -54,6 +54,7 @@ class PtpSppd extends Model
             'jenis_surat_id' => 'required|string',
             'perihal' => 'required|string',
             'status_surat' => 'nullable|string',
+            'biaya' => 'required',
             'lampiran' => 'nullable',
         ];
     }

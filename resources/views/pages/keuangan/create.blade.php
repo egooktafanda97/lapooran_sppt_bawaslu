@@ -41,9 +41,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label for="">Tanggal</label>
-                                    <input class="form-control mb-2" name="tanggal" type="date"
-                                        value="{{ $keuangan->tanggal ?? null }}">
+                                    <label for="">Item Tanggal Mulai</label>
+                                    <input class="form-control mb-2" name="tanggal_start" type="date"
+                                        value="{{ $keuangan->tanggal_start ?? null }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label for="">Item Tanggal Selesai</label>
+                                    <input class="form-control mb-2" name="tanggal_end" type="date"
+                                        value="{{ $keuangan->tanggal_end ?? null }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -78,7 +85,7 @@
                             </div>
                         </div>
                         <hr class="border-gray-200 mb-2">
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-12">
                                 <div class="flex justify-end mb-2 mt-2">
                                     <button class="btn btn-primary btn-md text-white"data-bs-toggle="modal"
@@ -122,7 +129,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
             </div>

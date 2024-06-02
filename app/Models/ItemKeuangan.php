@@ -17,10 +17,14 @@ class ItemKeuangan extends Model
      */
     protected $fillable = [
         'keuangan_id',
-        'max',
+        'user_id',
+        'bawaslu_id',
+        'no_surat_pencairan',
+        'dikeluarkan_oleh',
         'nama_penerima',
         'uraian',
-        'tanggal',
+        'tanggal_surat',
+        'tanggal_terima',
         'nomor',
         'jumlah',
         'ppn',
@@ -30,5 +34,24 @@ class ItemKeuangan extends Model
     public function keuangan()
     {
         return $this->belongsTo(Keuangan::class, 'keuangan_id');
+    }
+
+    public function rules()
+    {
+        return [
+            'keuangan_id' => 'nullable|integer',
+            'user_id' => 'required|integer',
+            'bawaslu_id' => 'required|integer',
+            'no_surat_pencairan' => 'nullable|string|max:255',
+            'dikeluarkan_oleh' => 'required|integer',
+            'nama_penerima' => 'required|string|max:255',
+            'uraian' => 'required|string|max:255',
+            'tanggal_surat' => 'required|date',
+            'tanggal_terima' => 'required|date',
+            'nomor' => 'required|string|max:255',
+            'jumlah' => 'required|string|max:255',
+            'ppn' => 'nullable|string|max:255',
+            'pph' => 'nullable|string|max:255',
+        ];
     }
 }

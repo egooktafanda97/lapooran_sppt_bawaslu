@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer('bawaslu_id');
             $table->string('no_surat');
             $table->string('no_dipa');
-            $table->date('tanggal');
+            $table->date('tanggal_dikeluarkan');
+            $table->date('tanggal_start');
+            $table->date('tanggal_end');
             $table->string('klarifikasi_belnja');
             $table->string('pengeluaran');
             $table->string('sts');

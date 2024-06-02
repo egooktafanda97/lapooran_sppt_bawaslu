@@ -53,7 +53,6 @@
             <thead>
                 <tr class="bg-gray-200">
                     <th class="text-center text-sm border border-gray-400 px-2 py-2" rowspan="2">NO</th>
-                    <th class="text-center text-sm border border-gray-400 px-2 py-2" rowspan="2">MAX</th>
                     <th class="text-center text-sm border border-gray-400 px-2 py-2" rowspan="2">NAMA PENERIMA</th>
                     <th class="text-center text-sm border border-gray-400 px-2 py-2" rowspan="2">URAIAN</th>
                     <th class="text-center text-sm border border-gray-400 px-2 py-2" colspan="2">BUKTI</th>
@@ -72,7 +71,7 @@
                 @foreach ($keuangan->items as $it)
                     <tr>
                         <td class="border border-gray-400 px-4 py-2">{{ $loop->iteration }}</td>
-                        <td class="border border-gray-400 px-4 py-2">{{ $it->max }}</td>
+
                         <td class="border border-gray-400 px-4 py-2">{{ $it->nama_penerima }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $it->uraian }}</td>
                         <td class="border border-gray-400 px-4 py-2">{{ $it->tanggal }}</td>

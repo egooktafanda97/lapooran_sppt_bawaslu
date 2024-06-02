@@ -15,15 +15,19 @@ return new class extends Migration
     {
         Schema::create('item_keuangan', function (Blueprint $table) {
             $table->id();
-            $table->integer("keuangan_id");
-            $table->string('max');
+            $table->integer("keuangan_id")->nullable();
+            $table->integer("user_id");
+            $table->integer('bawaslu_id');
+            $table->string('nomor');
+            $table->string('no_surat_pencairan')->nullable();
+            $table->string('dikeluarkan_oleh');
             $table->string('nama_penerima');
             $table->string('uraian');
-            $table->string('tanggal');
-            $table->string('nomor');
+            $table->string('tanggal_surat');
+            $table->string('tanggal_terima');
             $table->string('jumlah');
-            $table->string('ppn');
-            $table->string('pph');
+            $table->string('ppn')->nullable();
+            $table->string('pph')->nullable();
             $table->timestamps();
         });
     }

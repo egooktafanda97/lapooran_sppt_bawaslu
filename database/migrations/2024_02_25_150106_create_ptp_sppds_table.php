@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string("no_spt");
             $table->string("jenis_surat_id");
             $table->string("perihal");
+            $table->string("biaya");
             $table->string('status_surat')->default('Dalam Proses');
             $table->string('lampiran')->nullable();
             $table->timestamps();
